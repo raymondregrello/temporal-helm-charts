@@ -23,6 +23,9 @@ spec:
       {{ include "temporal.serviceAccount" $ }}
       restartPolicy: OnFailure
       initContainers:
+        {{- if $.Values.schema.sidecarContainers }}
+        {{- toYaml $.Values.schema.sidecarContainers | nindent 8 }}
+        {{- end }}
         {{- if $.Values.cassandra.enabled }}
         - name: check-cassandra-service
           image: busybox
